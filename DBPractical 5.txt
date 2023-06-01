@@ -1,0 +1,103 @@
+                                                                         Practical No ::5
+Named PL/SQL Block: PL/SQL Stored Procedure and Stored Function.Write a Stored Procedure namely proc_Grade for the categorization of student. If marks scored by students in examination is <=1500 and marks>=990 then student will be placed in distinction category if marks scored are between 989 and900 category is first class, if marks899and 825 category is Higher Second Class. Write a PL/SQLblock to use procedure created with above requirement. Stud_Marks(name,total_marks) Result(Roll,Name, Class)
+
+solution:
+Query:  
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 0                  |
+| borrow             |
+| information_schema |
+| mysql              |
+| officer            |
+| performance_schema |
+| phpmyadmin         |
+| shop_db            |
+| student            |
+| studmarks          |
+| user_form          |
++--------------------+
+11 rows in set (0.00 sec)  
+
+mysql> create database studmarks;
+Query OK, 1 row affected (0.00 sec) 
+                                                                   
+mysql>create table studmarks(rollno int,name varchar(100), totalmarks int);
+
+mysql> create table result(rollno int, name varchar(100),class varchar(100));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into  result values(1,'Gaurav',' ');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  result values(2,'Pratik',' ');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into studmarks values(1,'Gaurav',1000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into studmarks values(2,'Pratik',800);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from studmarks;
++--------+--------+------------+
+| rollno | name   | totalmarks |
++--------+--------+------------+
+|      1 | Gaurav |       1000 |
+|      2 | Pratik |        800 |
++--------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from result;
++--------+--------+-------+
+| rollno | name   | class |
++--------+--------+-------+
+|      1 | Gaurav |       |
+|      2 | Pratik |       |
++--------+--------+-------+
+2 rows in set (0.00 sec)
+
+procedure:
+create or replace procedure grade(r in number)
+as
+t studmarks.totalmarks%type;
+begin
+select totalmarks into t from studmarks where rollno=r;
+if (t>=990) then
+dbms_output.put_line('Distinction');
+update result set class='Distinction' where rollno=r;
+elsif(t>=500 and t<990) then
+dbms_output.put_line('First Class');
+update result set class='First Class' where rollno=r;
+elsif(t<500) then
+dbms_output.put_line('Fail');
+update result set class='Fail' where rollno=r;
+end if;
+dbms_output.put_line('End of program');
+end;
+
+Call:
+begin
+grade(1);
+end;
+/
+
+output:
+Distinction
+End of program
+
+Statement processed.
+
+begin
+grade(2);
+end;
+/
+
+output:
+Frist Class
+End of program
+
+Statement processed.
+

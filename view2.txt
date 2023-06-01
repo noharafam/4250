@@ -1,0 +1,53 @@
+CREATE TABLE Employees (
+    EmployeeID INT,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    HireDate DATE,
+    Salary DECIMAL(10, 2),
+    PRIMARY KEY (EmployeeID)
+);
+
+
+2) INSERT INTO Employees (EmployeeID, FirstName, LastName, HireDate, Salary)
+VALUES (1, 'John', 'Doe', DATE '2023-01-01', 6000);
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, HireDate, Salary)
+VALUES (2, 'Jane', 'Smith', DATE '2023-02-01', 5500);
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, HireDate, Salary)
+VALUES (3, 'Michael', 'Johnson', DATE '2023-03-01', 7000);
+
+3) CREATE VIEW HighPaidEmployees AS
+SELECT EmployeeID, FirstName, LastName, Salary
+FROM Employees
+WHERE Salary > 5000;
+
+
+4) CREATE INDEX idx_LastName ON Employees (LastName);
+
+
+5) CREATE SEQUENCE emp_seq
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+
+6) ALTER TABLE Employees
+ADD CONSTRAINT chk_Salary CHECK (Salary >= 0);
+
+7) SELECT * FROM HighPaidEmployees;
+
+8) SELECT index_name, table_name, uniqueness, column_name
+FROM all_ind_columns
+WHERE table_name = 'Employees';
+
+9) SELECT sequence_name, min_value, max_value, increment_by, last_number
+FROM all_sequences
+WHERE sequence_name = 'emp_seq';
+
+10) SELECT constraint_name, constraint_type, search_condition
+FROM all_constraints
+WHERE table_name = 'Employees';
+
+
+
